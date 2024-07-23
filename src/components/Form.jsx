@@ -32,7 +32,7 @@ import "react-datepicker/dist/react-datepicker.css";
 export const PopUp = () => {
   const { events, setEvents, users, categories } = useContext(EventContext);
   const [title, setTitle] = useState("");
-  const [createdby, setCreatedby] = useState("");
+  const [createdby, setCreatedby] = useState("1");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState([]);
   const [location, setLocation] = useState("");
@@ -136,9 +136,7 @@ export const PopUp = () => {
                 </InputGroup>
                 {/* <InputGroup> */}
                 <Select onChange={(e) => setCreatedby(e.target.value)}>
-                  <option disabled required>
-                    --Select the writer--
-                  </option>
+                  <option disabled>--Select the writer--</option>
                   {users.map((item) => (
                     <option key={item.id} value={item.id}>
                       {item.name}
