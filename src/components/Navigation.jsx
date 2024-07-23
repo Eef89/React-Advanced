@@ -1,25 +1,40 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // import { TextInput } from "./ui/TextInput";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Flex,
+} from "@chakra-ui/react";
+import { PhoneIcon } from "@chakra-ui/icons";
 import { PopUp } from "./Form";
 
 export const Navigation = () => {
   return (
-    <Breadcrumb separator="-">
-      <BreadcrumbItem>
-        <Link to="event/1">Home</Link>
-      </BreadcrumbItem>
+    <Flex h={10} padding={4}>
+      <Breadcrumb separator="-" display={["none", "flex"]}>
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} to="/">
+            Home
+          </BreadcrumbLink>
+        </BreadcrumbItem>
 
-      <BreadcrumbItem>
-        <BreadcrumbLink href="#">About</BreadcrumbLink>
-      </BreadcrumbItem>
+        <BreadcrumbItem>
+          <Link to="event/1">Add</Link>
+        </BreadcrumbItem>
 
-      <BreadcrumbItem isCurrentPage>
-        <BreadcrumbLink href="#">Contact</BreadcrumbLink>
-      </BreadcrumbItem>
-      <PopUp></PopUp>
-    </Breadcrumb>
+        <BreadcrumbItem isCurrentPage>
+          <Link to="event/1">Home</Link>
+        </BreadcrumbItem>
+        <PopUp></PopUp>
+      </Breadcrumb>
+      <Breadcrumb separator="-" display={["flex", "none"]}>
+        <BreadcrumbItem>
+          <PhoneIcon></PhoneIcon>
+        </BreadcrumbItem>
+      </Breadcrumb>
+    </Flex>
   );
 };
 

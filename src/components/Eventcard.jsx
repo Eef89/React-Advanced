@@ -30,7 +30,6 @@ export const EventsCard = ({ event }) => {
           h={64}
           w={800}
           src={event.image}
-          alt="Green double couch with wooden legs"
           borderTopRadius="md"
         />
         <Stack mt="6" spacing="3">
