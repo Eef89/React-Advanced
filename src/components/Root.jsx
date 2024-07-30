@@ -1,13 +1,16 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { Navigation } from './Navigation';
-import { Box } from '@chakra-ui/react';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import { Navigation } from "./Navigation";
+import { Box } from "@chakra-ui/react";
+import { EventContextProvider } from "../context/EventProvider";
 
 export const Root = () => {
   return (
-    <Box>
-      <Navigation />
-      <Outlet />
-    </Box>
+    <EventContextProvider>
+      <Box>
+        <Navigation />
+        <Outlet />
+      </Box>
+    </EventContextProvider>
   );
 };

@@ -1,14 +1,11 @@
-import { useContext } from "react";
-import { EventContext } from "../context/EventProvider";
 import { EventsCard } from "./Eventcard";
 import { GridItem, Wrap } from "@chakra-ui/react";
 
-export const Events = ({ ...props }) => {
-  const { events } = useContext(EventContext);
+export const Events = ({ eventList, ...props }) => {
   return (
     <>
       <Wrap spacing={8} justify="center" paddingBottom={8} {...props}>
-        {events.map((item) => (
+        {eventList.map((item) => (
           <GridItem key={item.id}>
             <EventsCard event={item} key={item.id} />
           </GridItem>

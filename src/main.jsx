@@ -6,22 +6,25 @@ import { EventsPage } from "./pages/EventsPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./components/Root";
 import { EventContextProvider } from "./context/EventProvider";
+import { useRevalidator } from "react-router-dom";
+import { EditPost } from "./components/EditPost";
+
+// let revalidator = useRevalidator();
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+
     children: [
       {
         path: "/",
         element: <EventsPage />,
-        // loader: postListLoader,
       },
       {
         path: "/event/:eventId",
         element: <EventPage />,
         loader: postLoader,
-        // action: addComment,
       },
     ],
   },
@@ -29,10 +32,10 @@ const router = createBrowserRouter([
 // @ts-ignore
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <EventContextProvider>
-      <ChakraProvider>
-        <RouterProvider router={router} />
-      </ChakraProvider>
-    </EventContextProvider>
+    {/* <EventContextProvider> */}
+    <ChakraProvider>
+      <RouterProvider router={router} />
+    </ChakraProvider>
+    {/* </EventContextProvider> */}
   </React.StrictMode>
 );

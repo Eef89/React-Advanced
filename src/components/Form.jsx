@@ -22,69 +22,105 @@ import {
   Box,
   InputLeftAddon,
 } from "@chakra-ui/react";
-import { PhoneIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { AddIcon, Icon } from "@chakra-ui/icons";
 import { useContext } from "react";
 import { EventContext } from "../context/EventProvider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { FiActivity } from "react-icons/fi";
+import { MdOutlineDescription } from "react-icons/md";
+import { FaLocationDot } from "react-icons/fa6";
 
-export const PopUp = () => {
-  const { events, setEvents, users, categories } = useContext(EventContext);
-  const [title, setTitle] = useState("");
-  const [createdby, setCreatedby] = useState("1");
-  const [description, setDescription] = useState("");
-  const [category, setCategory] = useState([]);
-  const [location, setLocation] = useState("");
-  const [image, setImage] = useState("");
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+export const PopUp = ({ ...props }) => {
+  const {
+    users,
+    categories,
+    title,
+    setTitle,
+    createdby,
+    setCreatedby,
+    description,
+    setDescription,
+    category,
+    setCategory,
+    location,
+    setLocation,
+    image,
+    setImage,
+    startTime,
+    setStartTime,
+    endTime,
+    setEndTime,
+    createUser,
+  } = useContext(EventContext);
+
   let categoryId = [""]; // gebruikt om catogorien om te zetten naar ID's
 
-  const createUser = async (event) => {
-    const response = await fetch("http://localhost:3000/events", {
-      method: "POST",
-      body: JSON.stringify(event),
-      headers: { "Content-Type": "application/json;charset=utf-8" },
+  const toast = useToast();
+
+  const toast1 = () =>
+    toast({
+      title: "Event created.",
+      description: "",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
     });
-    event.id = (await response.json()).id;
-    setEvents(events.concat(event));
-  };
 
   const categoryNameToID = category.forEach((cat) => {
     const catfinder = categories.find((item) => item.name === cat);
     categoryId.push(catfinder.id);
-    console.log(categoryId);
   });
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const categoryIds = categoryId.slice(1);
     const createdBy = Number(createdby);
-    createUser({
-      title,
-      createdBy,
-      description,
-      categoryIds,
-      image,
-      location,
-      startTime,
-      endTime,
-    });
-    setTitle("");
-    setCreatedby("");
-    setDescription("");
-    setCategory([]);
-    setLocation("");
+
+    if (title === "" || description === "") {
+      alert("You forgot some fields");
+
+      return false;
+    }
+    if (image === "") {
+      setImage(
+        "https://i.pinimg.com/736x/3d/2f/af/3d2faf4e3188d34a9fcdc00df59e77b0.jpg"
+      );
+      alert("image is set to standard image");
+    } else {
+      {
+        createUser({
+          title,
+          createdBy,
+          description,
+          categoryIds,
+          image,
+          location,
+          startTime,
+          endTime,
+        });
+      }
+      toast1();
+      onClose();
+      setTitle("");
+      setCreatedby("");
+      setImage("");
+      setDescription("");
+      setCategory([]);
+      setLocation("");
+      setStartTime(new Date());
+      setEndTime(new Date());
+    }
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const toast = useToast();
-
   return (
     <>
-      <Button onClick={onOpen}>Add event</Button>
+      <Button onClick={onOpen} {...props}>
+        <AddIcon></AddIcon>
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -94,7 +130,7 @@ export const PopUp = () => {
               <Stack>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
-                    <PhoneIcon color="gray.300" />
+                    <Icon as={FiActivity} color="gray.300" />
                   </InputLeftElement>
                   <Input
                     type="text"
@@ -105,7 +141,7 @@ export const PopUp = () => {
                 </InputGroup>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
-                    <PhoneIcon color="gray.300" />
+                    <Icon as={MdOutlineDescription} color="gray.300" />
                   </InputLeftElement>
                   <Input
                     type="text"
@@ -125,7 +161,7 @@ export const PopUp = () => {
                 </InputGroup>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
-                    <PhoneIcon color="gray.300" />
+                    <Icon as={FaLocationDot} color="gray.300" />
                   </InputLeftElement>
                   <Input
                     type="text"
@@ -164,7 +200,7 @@ export const PopUp = () => {
                     showIcon
                     selected={startTime}
                     onChange={(startTime) => setStartTime(startTime)}
-                    dateFormat="MMMM d, yyyy h:mmaa"
+                    dateFormat="MMMM d, yyyy h:mm aa"
                   ></DatePicker>
                 </InputGroup>
                 <InputGroup>
@@ -174,24 +210,10 @@ export const PopUp = () => {
                     showIcon
                     selected={endTime}
                     onChange={(endTime) => setEndTime(endTime)}
-                    dateFormat="MMMM d, yyyy h:mmaa"
+                    dateFormat="MMMM d, yyyy h:mm aa"
                   ></DatePicker>
                 </InputGroup>
-                <Button
-                  type="submit"
-                  onClick={() => {
-                    toast({
-                      title: "Account created.",
-                      description: "We've created your account for you.",
-                      status: "success",
-                      duration: 9000,
-                      isClosable: true,
-                    });
-                    onClose();
-                  }}
-                >
-                  Add event
-                </Button>
+                <Button type="submit">Add event</Button>
               </Stack>
             </form>
           </ModalBody>

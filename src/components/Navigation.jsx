@@ -6,36 +6,33 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Flex,
+  Spacer,
+  Box,
+  Button,
+  ButtonGroup,
+  Heading,
 } from "@chakra-ui/react";
-import { PhoneIcon } from "@chakra-ui/icons";
+import { Icon } from "@chakra-ui/icons";
 import { PopUp } from "./Form";
+import { IoIosHome } from "react-icons/io";
 
 export const Navigation = () => {
   return (
-    <Flex h={10} padding={4}>
-      <Breadcrumb separator="-" display={["none", "flex"]}>
-        <BreadcrumbItem>
-          <BreadcrumbLink as={Link} to="/">
-            Home
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-
-        <BreadcrumbItem>
-          <Link to="event/1">Add</Link>
-        </BreadcrumbItem>
-
-        <BreadcrumbItem isCurrentPage>
-          <Link to="event/1">Home</Link>
-        </BreadcrumbItem>
-        <PopUp></PopUp>
-      </Breadcrumb>
-      <Breadcrumb separator="-" display={["flex", "none"]}>
-        <BreadcrumbItem>
-          <PhoneIcon></PhoneIcon>
-        </BreadcrumbItem>
-      </Breadcrumb>
-    </Flex>
+    <>
+      <Flex minWidth="max-content" alignItems="center" gap="2" padding={2}>
+        <Box p="2">
+          <Heading size="lg" paddingLeft={[2, 2, 2, 20]}>
+            Event Creator
+          </Heading>
+        </Box>
+        <Spacer />
+        <ButtonGroup paddingRight={[2, 2, 2, 20]}>
+          <Button as={Link} to="/">
+            <Icon as={IoIosHome}></Icon>
+          </Button>
+          <PopUp></PopUp>
+        </ButtonGroup>
+      </Flex>
+    </>
   );
 };
-
-// Toevoegen searchbalk!
