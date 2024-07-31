@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import {
   Button,
   Modal,
@@ -8,28 +7,14 @@ import {
   ModalBody,
   useDisclosure,
   useToast,
-  FormControl,
   Stack,
-  Input,
-  FormLabel,
-  InputGroup,
-  InputAddon,
-  Select,
-  InputLeftElement,
-  Radio,
-  RadioGroup,
-  CheckboxGroup,
-  Checkbox,
-  Box,
-  InputLeftAddon,
 } from "@chakra-ui/react";
-import { useLoaderData, useRevalidator, Link } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
 import { useContext } from "react";
 import { EventContext } from "../context/EventProvider";
 // import { DelePost } from "../components/EditPost";
 
 export const DeletePost = () => {
-  let revalidator = useRevalidator();
   const { count, setCount } = useContext(EventContext);
   const { event } = useLoaderData();
   const eventid = event.id;

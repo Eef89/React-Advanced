@@ -6,29 +6,15 @@ import {
   ModalHeader,
   ModalBody,
   useDisclosure,
-  useToast,
-  FormControl,
   Stack,
-  Input,
-  FormLabel,
   InputGroup,
-  InputAddon,
-  Select,
-  InputLeftElement,
-  Radio,
-  RadioGroup,
-  CheckboxGroup,
-  Checkbox,
-  Box,
   InputLeftAddon,
 } from "@chakra-ui/react";
-import { PhoneIcon, AddIcon, EditIcon, Icon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { EditIcon, Icon } from "@chakra-ui/icons";
 import { useContext } from "react";
 import { EventContext } from "../context/EventProvider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { MdAdfScanner } from "react-icons/md";
 
 export const EditDate = ({ what, which, val, how }) => {
   const {
@@ -43,9 +29,6 @@ export const EditDate = ({ what, which, val, how }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // event.stopPropagation();
-    // const createdBy = Number(createdby);
-
     what({ [which]: val });
 
     onClose();
@@ -73,7 +56,7 @@ export const EditDate = ({ what, which, val, how }) => {
           <ModalBody>
             <form onSubmit={handleSubmit}>
               <Stack>
-                <InputGroup>
+                <InputGroup zIndex="3">
                   <InputLeftAddon pointerEvents="none">
                     Starttime
                   </InputLeftAddon>

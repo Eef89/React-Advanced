@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
 import {
   Heading,
-  Button,
   Center,
   Box,
   Flex,
@@ -11,41 +9,37 @@ import {
   Wrap,
   Text,
 } from "@chakra-ui/react";
-import { useLoaderData, useRevalidator, Link } from "react-router-dom";
+import { useLoaderData, useRevalidator } from "react-router-dom";
 import { useContext } from "react";
 import { EventContext } from "../context/EventProvider";
 import { EditPost } from "../components/EditPost";
 import { EditDate } from "../components/EditDate";
 import { DeletePost } from "../components/DeletePost.JSX";
 import { DateFormat } from "../components/ui/Dateformat";
+import { Creator } from "../components/ui/creatorItem";
+import { Tag } from "../components/ui/CategoryTag";
 
 export const loader = async ({ params }) => {
-  // const users = await fetch("http://localhost:3000/users");
   const events = await fetch(`http://localhost:3000/events/${params.eventId}`);
+  const user = await fetch(`http://localhost:3000/users/`);
+  const categories = await fetch(`http://localhost:3000/categories/`);
 
   return {
-    // users: await users.json(),
     event: await events.json(),
+    user: await user.json(), // Werk niet, geen idee waarom
+    categories: await categories.json(),
   };
 };
 
 export const EventPage = () => {
   let revalidator = useRevalidator();
   const {
-    users,
-    categories,
     title,
     setTitle,
-    createdby,
-    setCreatedby,
     description,
     setDescription,
-    category,
-    setCategory,
     location,
     setLocation,
-    image,
-    setImage,
     startTime,
     setStartTime,
     endTime,
@@ -54,7 +48,7 @@ export const EventPage = () => {
     setCount,
   } = useContext(EventContext);
   // const { events } = useContext(EventContext);
-  const { event } = useLoaderData();
+  const { event, user, categories } = useLoaderData();
   const eventid = event.id;
   const editPost = async (event) => {
     await fetch(`http://localhost:3000/events/${eventid}`, {
@@ -66,13 +60,14 @@ export const EventPage = () => {
     setCount(count + 1); // EventProvider infite loop problem solution
   };
 
-  // const deletePost = async (event) => {
-  //   await fetch(`http://localhost:3000/events/${eventid}`, {
-  //     method: "DELETE",
-  //   });
-  //   revalidator.revalidate();
-  //   setCount(count + 1); // EventProvider infite loop problem solution
-  // };
+  const creator = user.find((ite) => ite.id === event.createdBy);
+
+  // Funtion for reading the categorynames from the
+  const newCategoryList = [];
+  event.categoryIds.map((item) => {
+    const match = categories.find((cat) => cat.id === item);
+    newCategoryList.push(match);
+  });
 
   return (
     <Center
@@ -150,22 +145,15 @@ export const EventPage = () => {
           </Box>
           {/* Start of right box */}
           <Box>
-            <Text
-              marginBottom="5px"
-              fontSize="0.9em"
-              color="grey"
-              marginTop={[-100, -100, 0]}
-            >
-              Created by:
-            </Text>
-
-            <Text h="1em"></Text>
-            <Text marginBottom="5px" fontSize="0.9em" color="grey">
-              Diet:
-            </Text>
-            <Text h="1em"></Text>
-            <Text fontSize="xl">Total Nutrients:</Text>
-            <Text h="1em"></Text>
+            <Creator item={creator}></Creator>
+            <Divider></Divider>
+            <Flex gap={2} paddingTop={8} justify="center">
+              {newCategoryList.map((item) => (
+                <Tag key={item.id} variant="solid" bgColor="green.500">
+                  {item.name}
+                </Tag>
+              ))}
+            </Flex>
           </Box>
         </SimpleGrid>
         <Flex justify="center">

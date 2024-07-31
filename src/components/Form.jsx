@@ -7,19 +7,13 @@ import {
   ModalBody,
   useDisclosure,
   useToast,
-  FormControl,
   Stack,
   Input,
-  FormLabel,
   InputGroup,
-  InputAddon,
   Select,
   InputLeftElement,
-  Radio,
-  RadioGroup,
   CheckboxGroup,
   Checkbox,
-  Box,
   InputLeftAddon,
 } from "@chakra-ui/react";
 import { AddIcon, Icon } from "@chakra-ui/icons";
@@ -54,8 +48,6 @@ export const PopUp = ({ ...props }) => {
     createUser,
   } = useContext(EventContext);
 
-  let categoryId = [""]; // gebruikt om catogorien om te zetten naar ID's
-
   const toast = useToast();
 
   const toast1 = () =>
@@ -67,7 +59,11 @@ export const PopUp = ({ ...props }) => {
       isClosable: true,
     });
 
-  const categoryNameToID = category.forEach((cat) => {
+  let categoryId = [""]; // gebruikt om catogorien om te zetten naar ID's
+
+  // const categoryNameToID =
+
+  category.forEach((cat) => {
     const catfinder = categories.find((item) => item.name === cat);
     categoryId.push(catfinder.id);
   });
@@ -75,10 +71,10 @@ export const PopUp = ({ ...props }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const categoryIds = categoryId.slice(1);
     const createdBy = Number(createdby);
+    const categoryIds = categoryId.slice(1);
 
-    if (title === "" || description === "") {
+    if (title === "" || description === "" || location === "") {
       alert("You forgot some fields");
 
       return false;
@@ -104,7 +100,7 @@ export const PopUp = ({ ...props }) => {
       toast1();
       onClose();
       setTitle("");
-      setCreatedby("");
+      setCreatedby("1");
       setImage("");
       setDescription("");
       setCategory([]);
@@ -124,7 +120,7 @@ export const PopUp = ({ ...props }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
+          <ModalHeader>Create event!</ModalHeader>
           <ModalBody>
             <form onSubmit={handleSubmit}>
               <Stack>
@@ -159,6 +155,28 @@ export const PopUp = ({ ...props }) => {
                     value={image}
                   />
                 </InputGroup>
+                <InputGroup zIndex="3">
+                  <InputLeftAddon pointerEvents="none">
+                    Starttime
+                  </InputLeftAddon>
+                  <DatePicker
+                    showTimeSelect
+                    showIcon
+                    selected={startTime}
+                    onChange={(startTime) => setStartTime(startTime)}
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                  ></DatePicker>
+                </InputGroup>
+                <InputGroup zIndex="2">
+                  <InputLeftAddon pointerEvents="none">Endtime</InputLeftAddon>
+                  <DatePicker
+                    showTimeSelect
+                    showIcon
+                    selected={endTime}
+                    onChange={(endTime) => setEndTime(endTime)}
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                  ></DatePicker>
+                </InputGroup>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <Icon as={FaLocationDot} color="gray.300" />
@@ -170,7 +188,6 @@ export const PopUp = ({ ...props }) => {
                     value={location}
                   />
                 </InputGroup>
-                {/* <InputGroup> */}
                 <Select onChange={(e) => setCreatedby(e.target.value)}>
                   <option disabled>--Select the writer--</option>
                   {users.map((item) => (
@@ -191,28 +208,7 @@ export const PopUp = ({ ...props }) => {
                     ))}
                   </Stack>
                 </CheckboxGroup>
-                <InputGroup>
-                  <InputLeftAddon pointerEvents="none">
-                    Starttime
-                  </InputLeftAddon>
-                  <DatePicker
-                    showTimeSelect
-                    showIcon
-                    selected={startTime}
-                    onChange={(startTime) => setStartTime(startTime)}
-                    dateFormat="MMMM d, yyyy h:mm aa"
-                  ></DatePicker>
-                </InputGroup>
-                <InputGroup>
-                  <InputLeftAddon pointerEvents="none">Endtime</InputLeftAddon>
-                  <DatePicker
-                    showTimeSelect
-                    showIcon
-                    selected={endTime}
-                    onChange={(endTime) => setEndTime(endTime)}
-                    dateFormat="MMMM d, yyyy h:mm aa"
-                  ></DatePicker>
-                </InputGroup>
+
                 <Button type="submit">Add event</Button>
               </Stack>
             </form>

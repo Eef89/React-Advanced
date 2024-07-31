@@ -4,31 +4,13 @@ import { Center } from "@chakra-ui/react";
 import { Events } from "../components/Eventlist";
 import { EventContext } from "../context/EventProvider";
 import { TextInput } from "../components/ui/TextInput";
-import { useRevalidator } from "react-router-dom";
 import { FilterCategory } from "../components/ui/FilterCatagory";
 
 export const EventsPage = () => {
   const {
     events,
-    setEvents,
-    users,
+
     categories,
-    title,
-    setTitle,
-    createdby,
-    setCreatedby,
-    description,
-    setDescription,
-    category,
-    setCategory,
-    location,
-    setLocation,
-    image,
-    setImage,
-    startTime,
-    setStartTime,
-    endTime,
-    setEndTime,
   } = useContext(EventContext);
 
   const [searchField, setSearchField] = useState("");
@@ -40,7 +22,8 @@ export const EventsPage = () => {
   // filter for category # kan vast makkelijker! Iemand?
   const [category2, setCategory2] = useState([]); // naam aanpassen!
   let categoryId = [];
-  const categoryNameToID = category2.forEach((cat) => {
+  // const categoryNameToID =
+  category2.forEach((cat) => {
     const catfinder = categories.find((item) => item.name === cat);
     categoryId.push(catfinder.id);
   });

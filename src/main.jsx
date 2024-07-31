@@ -5,11 +5,6 @@ import { EventPage, loader as postLoader } from "./pages/EventPage";
 import { EventsPage } from "./pages/EventsPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root } from "./components/Root";
-import { EventContextProvider } from "./context/EventProvider";
-import { useRevalidator } from "react-router-dom";
-import { EditPost } from "./components/EditPost";
-
-// let revalidator = useRevalidator();
 
 const router = createBrowserRouter([
   {

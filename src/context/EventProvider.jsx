@@ -18,14 +18,13 @@ export const EventContextProvider = ({ children }) => {
   const [count, setCount] = useState(1); // infinite loop solution dependency --> useEffect
 
   const createUser = async (event) => {
-    const response = await fetch("http://localhost:3000/events", {
+    // const response =
+    await fetch("http://localhost:3000/events", {
       method: "POST",
       body: JSON.stringify(event),
       headers: { "Content-Type": "application/json;charset=utf-8" },
     });
     setCount(count + 1);
-    // event.id = (await response.json()).id;
-    // setEvents(events.concat(event));
   };
 
   useEffect(() => {
