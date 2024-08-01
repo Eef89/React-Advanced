@@ -33,7 +33,7 @@ export const EditDate = ({ what, which, val, how }) => {
 
     onClose();
     setTitle("");
-    setCreatedby("");
+    setCreatedby("1");
     setDescription("");
     setCategory([]);
     setLocation("");
