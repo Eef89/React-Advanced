@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext, useState } from "react";
-import { Center } from "@chakra-ui/react";
+import { Center, Text } from "@chakra-ui/react";
 import { Events } from "../components/Eventlist";
 import { EventContext } from "../context/EventProvider";
 import { TextInput } from "../components/ui/TextInput";
@@ -65,6 +65,7 @@ export const EventsPage = () => {
   const matchedEvents = list.filter((match) => {
     return match.title.toLowerCase().includes(searchField.toLowerCase());
   });
+  console.log(matchedEvents.length);
 
   return (
     <Center
@@ -81,7 +82,12 @@ export const EventsPage = () => {
         w={["80%", "xl", "2xl"]}
       ></TextInput>
       <FilterCategory changefn={setCategory2}></FilterCategory>
-      <Events eventList={matchedEvents} columns={[1, 2, 2, 3, 4]}></Events>
+      {matchedEvents.length === 0 ? (
+        <Text>Sorry, nothing found!</Text>
+      ) : (
+        <Events eventList={matchedEvents} columns={[1, 2, 2, 3, 4]}></Events>
+      )}
+      {/* <Events eventList={matchedEvents} columns={[1, 2, 2, 3, 4]}></Events> */}
     </Center>
   );
 };

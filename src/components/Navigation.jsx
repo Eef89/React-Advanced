@@ -15,7 +15,9 @@ import { IoIosHome } from "react-icons/io";
 
 export const Navigation = () => {
   return (
-    <>
+    <div
+      style={{ position: "sticky", top: 0, background: "white", zIndex: "3" }}
+    >
       <Flex minWidth="max-content" alignItems="center" gap="2" padding={2}>
         <Box p="2">
           <Heading size="lg" paddingLeft={[2, 2, 2, 20]}>
@@ -30,6 +32,6 @@ export const Navigation = () => {
           <PopUp></PopUp>
         </ButtonGroup>
       </Flex>
-    </>
+    </div>
   );
 };
