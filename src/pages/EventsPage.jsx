@@ -65,7 +65,6 @@ export const EventsPage = () => {
   const matchedEvents = list.filter((match) => {
     return match.title.toLowerCase().includes(searchField.toLowerCase());
   });
-  console.log(matchedEvents.length);
 
   return (
     <Center
