@@ -26,7 +26,7 @@ export const Navigation = () => {
         </Box>
         <Spacer />
         <ButtonGroup paddingRight={[2, 2, 2, 20]}>
-          <Button as={Link} to="/">
+          <Button as={Link} to="/" onClick={() => window.scrollTo({ top: 0 })}>
             <Icon as={IoIosHome}></Icon>
           </Button>
           <PopUp></PopUp>
