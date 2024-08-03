@@ -49,7 +49,14 @@ export const DeletePost = () => {
           <ModalHeader>Sure?</ModalHeader>
           <ModalBody>
             <Stack>
-              <Button onClick={deletePost} as={Link} to="/">
+              <Button
+                onClick={() => {
+                  window.scrollTo({ top: 0 });
+                  deletePost();
+                }}
+                as={Link}
+                to="/"
+              >
                 Yes
               </Button>
               <Button onClick={onClose}>No </Button>
